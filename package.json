@@ -1,0 +1,27 @@
+{
+  "name": "express-api-1sem2024",
+  "version": "1.0.0",
+  "description": "API RestFull com Node e Express",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "dev2": "nodemon src/server.js"
+  },
+  "keywords": [
+    "express",
+    "api",
+    "node",
+    "jwt",
+    "zod"
+  ],
+  "author": "Renan Cavichi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
