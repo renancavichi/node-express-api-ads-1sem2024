@@ -2,15 +2,21 @@
 import express from 'express'
 import {PORT, HOST} from './config.js'
 import {users} from './db-memory/user.js'
+import logger from './middlewares/logger.js'
 
 const app = express()
 
 //middleware
 app.use(express.json())
+app.use('/user', logger)
 
 //routes
 app.get('/', (req, res) => {
   res.json({success: "Bem-vindo a API!"})
+})
+
+app.get('/products', (req, res) => {
+  res.json({success: "Rota de produtos!"})
 })
 
 app.get('/user', (req, res) => {
