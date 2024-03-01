@@ -19,7 +19,8 @@
   "author": "Renan Cavichi",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
