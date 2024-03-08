@@ -1,8 +1,8 @@
 import userModel from "../../models/userModel.js"
 
 const remove = (req, res) => {
-	const id = req.body.id
-	const dataValidated = userModel.validateId(id)
+	const {id} = req.params
+	const dataValidated = userModel.validateId(+id)
 	if(!dataValidated.success){
 		return res.status(400).json({
 			error: "Dados Inválidos!",
