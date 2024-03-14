@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "dev2": "nodemon src/server.js"
+    "dev": "node --watch src/server.js"
   },
   "keywords": [
     "express",
@@ -21,8 +20,5 @@
   "dependencies": {
     "express": "^4.18.2",
     "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.3"
   }
 }
