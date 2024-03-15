@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "prisma:generate": "npx prisma generate",
+    "prisma:pull": "npx prisma db pull",
+    "prisma:push": "npx prisma db push"
   },
   "keywords": [
     "express",
@@ -18,7 +21,11 @@
   "author": "Renan Cavichi",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.11.0",
     "express": "^4.18.2",
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "prisma": "^5.11.0"
   }
 }
