@@ -1,6 +1,6 @@
 import userModel from "../../models/userModel.js"
 
-const getById = (req, res) => {
+const getById = async (req, res) => {
 	const id = +req.params.id
 	const dataValidated = userModel.validateId(id)
 	if(!dataValidated.success){
@@ -9,7 +9,7 @@ const getById = (req, res) => {
 			fields: dataValidated.error.flatten().fieldErrors
 		})
 	}
-	const userResult = userModel.getById(dataValidated.data.id)
+	const userResult = await userModel.getById(dataValidated.data.id)
 	res.json({
 		success: `Usuário ${id} encontrado com sucesso!`,
 		user: userResult

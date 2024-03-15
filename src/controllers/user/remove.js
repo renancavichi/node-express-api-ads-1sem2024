@@ -1,6 +1,6 @@
 import userModel from "../../models/userModel.js"
 
-const remove = (req, res) => {
+const remove = async (req, res) => {
 	const {id} = req.params
 	const dataValidated = userModel.validateId(+id)
 	if(!dataValidated.success){
@@ -9,7 +9,7 @@ const remove = (req, res) => {
 			fields: dataValidated.error.flatten().fieldErrors
 		})
 	}
-	const usersResult = userModel.remove(dataValidated.data.id)
+	const usersResult = await userModel.remove(dataValidated.data.id)
 	res.json({
 		success: `Usuário ${id} removido com sucesso!`,
 		users: usersResult

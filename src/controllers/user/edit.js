@@ -1,6 +1,6 @@
 import userModel from "../../models/userModel.js"
 
-const edit = (req, res) => {
+const edit = async (req, res) => {
 	const newUser = {...req.body, id: +req.params.id}
 	const dataValidated = userModel.validateEdit(newUser)
 	if(!dataValidated.success){
@@ -9,10 +9,10 @@ const edit = (req, res) => {
 			fields: dataValidated.error.flatten().fieldErrors
 		})
 	}
-	const usersResult = userModel.edit(dataValidated.data)
+	const usersResult = await userModel.edit(dataValidated.data)
 	res.json({
 		success: `Usuário ${newUser.id} atualizado com sucesso!`,
-		users: usersResult
+		user: usersResult
 	})
 }
 

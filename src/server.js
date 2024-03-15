@@ -9,7 +9,7 @@ const app = express()
 
 //middleware
 app.use(express.json())
-app.use('/user', logger)
+app.use(logger)
 
 //routes
 app.get('/', (req, res) => {
