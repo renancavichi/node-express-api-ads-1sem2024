@@ -18,6 +18,7 @@ model product {
 model user {
   id     Int    @id @default(autoincrement())
   name   String @db.VarChar(200)
-  email  String @db.VarChar(500)
+  email  String @db.VarChar(500) @unique
+  pass   String @db.VarChar(400)
   avatar String @db.Text
 }

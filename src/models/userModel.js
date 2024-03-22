@@ -27,7 +27,13 @@ const userSchema = z.object({
 			invalid_type_error: 'O avatar deve ser uma string.',
 			required_error: 'Avatar obrigatório.'
 		})
-		.url({message: 'Url do avatar inválido.'})
+		.url({message: 'Url do avatar inválido.'}),
+	pass: z.string({
+		invalid_type_error: 'O pass deve ser uma string.',
+		required_error: 'Pass obrigatório.'
+		})
+		.min(6, {message: 'A senha deve ter no mínimo 6 caracteres.'})
+	//add pass rules
 })
 
 const validateCreate = (user) =>{
@@ -36,26 +42,51 @@ const validateCreate = (user) =>{
 }
 
 const validateEdit = (user) =>{
-	return userSchema.safeParse(user)
+	const partialUserSchema = userSchema.partial({pass: true})
+	return partialUserSchema.safeParse(user)
 }
 
 const validateId = (id) =>{
 	const partialUserSchema = userSchema.partial({
 		name: true,
 		email: true,
-		avatar: true
+		avatar: true,
+		pass: true
 	})
 	return partialUserSchema.safeParse({id})
 }
 
 const list = async () => {
-    return await prisma.user.findMany()
+    return await prisma.user.findMany({
+		select:{
+			id: true,
+			name: true,
+			email: true,
+			pass: false,
+			avatar: true
+		}
+	})
 }
 
 const getById = async (id) => {
 	return await prisma.user.findUnique({
 		where: {
 			id
+		},
+		select:{
+			id: true,
+			name: true,
+			email: true,
+			pass: false,
+			avatar: true
+		}
+	})
+}
+
+const getByEmail = async (email) => {
+	return await prisma.user.findUnique({
+		where: {
+			email
 		}
 	})
 }
@@ -71,7 +102,14 @@ const edit = async (newUser) => {
 		where:{
 			id: newUser.id
 		},
-		data: newUser
+		data: newUser,
+		select:{
+			id: true,
+			name: true,
+			email: true,
+			pass: false,
+			avatar: true
+		}
 	})
 }
 
@@ -83,4 +121,4 @@ const remove = async (id) => {
 	})
 }
 
-export default {list, create, edit, remove, validateCreate, validateEdit, validateId, getById} 
+export default {list, create, edit, getByEmail, remove, validateCreate, validateEdit, validateId, getById} 
