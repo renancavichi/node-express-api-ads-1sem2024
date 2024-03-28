@@ -14,7 +14,7 @@ app.use(logger)
 
 //routes
 app.get('/', (req, res) => {
-  res.json({success: "Bem-vindo a API!"})
+  res.json({success: `Bem-vindo a API!`})
 })
 
 app.use('/user', userRouter)
