@@ -5,6 +5,7 @@ import logger from './middlewares/logger.js'
 import userRouter from './routers/userRouter.js'
 import productRouter from './routers/productRouter.js'
 import authRouter from './routers/authRouter.js'
+import auth from './middlewares/auth.js'
 
 const app = express()
 
@@ -13,7 +14,7 @@ app.use(express.json())
 app.use(logger)
 
 //routes
-app.get('/', (req, res) => {
+app.get('/', auth, (req, res) => {
   res.json({success: `Bem-vindo a API!`})
 })
 
