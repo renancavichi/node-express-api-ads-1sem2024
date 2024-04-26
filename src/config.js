@@ -1,4 +1,4 @@
-export const PORT = 3000
-export const HOST = 'http://localhost'
+export const PORT = process.env.PORT || 3000 
+export const HOST = process.env.PORT || 'http://localhost'
 
-export const SECRET_KEY = "d1271a33548ef*&%$#575d6ba%$#$%#sf0febc"
+export const SECRET_KEY = process.env.SECRET_KEY || "SECRET_KEY"
