@@ -19,15 +19,18 @@ const auth = (req, res, next) => {
         message: 'Use o Padrão Bearer ###AccessToken### no Header Authorization',
         code: 'token-not-found'
     })
-    jwt.verify(token, SECRET_KEY, (error, decoded) => {
-        //TODO: verificar tipo de erro para dar a messagem/code especifico
-        if(error) return res.status(401).json({
-            error: 'Usuário não autorizado.',
-            message: error.message,
-            code: 'invalid-token'
-        })
-        req.userLogged = {id: decoded.id, name: decoded.name}
-    })
+    let userDecoded
+    try {
+        userDecoded = jwt.verify(token, SECRET_KEY)
+    } catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        res.clearCookie('refreshToken', {httpOnly: true, sameSite: 'None', secure: true})
+        return res.status(401).json({ error: 'Token expirado.', code: 'expired-token' })
+      }
+      res.clearCookie('refreshToken', {httpOnly: true, sameSite: 'None', secure: true})
+      return res.status(401).json({ error: 'Token Inválido.', code: 'invalid-token'})
+    }
+    req.userLogged = {id: userDecoded.id, name: userDecoded.name}
     next()
 }
 
