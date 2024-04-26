@@ -33,7 +33,11 @@ const userSchema = z.object({
 		required_error: 'Pass obrigatório.'
 		})
 		.min(6, {message: 'A senha deve ter no mínimo 6 caracteres.'})
-	//add pass rules
+		.regex(new RegExp('.*[A-Z].*'), { message: "A senha deve ter no mínimo uma letra maiúscula." })
+      	.regex(new RegExp('.*[a-z].*'), { message: "A senha deve ter no mínimo uma letra minúscula." })
+      	.regex(new RegExp('.*[0-9].*'), { message: "A senha deve ter no mínimo um número." })
+     	.regex(new RegExp('.*[`~<>?,./!@#$%^&*()\\-_+="\'|{}\\[\\];:\\\\].*'), { message: "A senha deve ter no mínimo um caractere especial." })
+      	.max(256, { message: "A senha deve ter no máximo 256 caracteres." }),
 })
 
 const validateCreate = (user) =>{
