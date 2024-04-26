@@ -8,8 +8,7 @@ const prisma = new PrismaClient()
 const refreshToken = (req, res) => {
     let token = false
 
-    //TODO: obter cookie refreshToken
-    // token = (cookie)
+    token = req?.cookies?.refreshToken
 
     const authorization = req.headers?.authorization
     if(authorization) token = authorization.split(' ')[1]
