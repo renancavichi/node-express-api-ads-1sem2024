@@ -30,9 +30,9 @@ model session {
   create_at DateTime? @default(now()) @db.Timestamp(0)
   update_at DateTime? @default(now()) @db.Timestamp(0)
   client    String?   @db.VarChar(255)
-  token     String?   @db.VarChar(255) @unique
+  token     String?   @unique @db.VarChar(255)
   user_id   Int?
-  user      user?     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "session_ibfk_1")
+  user      user?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@index([user_id], map: "session_ibfk_1")
+  @@index([user_id])
 }
