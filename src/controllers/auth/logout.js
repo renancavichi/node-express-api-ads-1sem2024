@@ -21,7 +21,7 @@ const logout = async (req, res) => {
 
     const sessionFound = await prisma.session.delete({
         where: {
-            token: token
+            token: refreshToken
         }
     })
 
