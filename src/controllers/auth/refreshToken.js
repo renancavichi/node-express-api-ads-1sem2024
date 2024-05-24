@@ -18,7 +18,7 @@ const refreshToken = (req, res) => {
         code: 'token-not-found'
     })
 
-    jwt.verify(token, SECRET_KEY, async (error, decoded) => {
+    jwt.verify(refreshToken, SECRET_KEY, async (error, decoded) => {
         if(error) return res.status(401).json({
             error: 'Usuário não autorizado.',
             message: error.message,
@@ -27,7 +27,7 @@ const refreshToken = (req, res) => {
         const userFound = await userModel.getById(decoded.id)
         const sessionFound = await prisma.session.findUnique({
             where: {
-                token: token,
+                token: refreshToken,
                 user_id: userFound.id
             }
         })
@@ -49,7 +49,7 @@ const refreshToken = (req, res) => {
         await prisma.session.update({
             where:{
                 user_id: userFound.id,
-                token: token,
+                token: refreshToken,
             },
             data: {
                 token: newRefreshToken
