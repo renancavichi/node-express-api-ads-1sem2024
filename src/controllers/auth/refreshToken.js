@@ -6,14 +6,14 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const refreshToken = (req, res) => {
-    let token = false
+    let refreshToken = false
 
-    token = req?.cookies?.refreshToken
+    refreshToken = req?.cookies?.refreshToken
 
     const authorization = req.headers?.authorization
-    if(authorization) token = authorization.split(' ')[1]
+    if(authorization) refreshToken = authorization.split(' ')[1]
 
-    if(!token) return res.status(401).json({
+    if(!refreshToken) return res.status(401).json({
         error: 'Usuário não autorizado.',
         code: 'token-not-found'
     })
@@ -40,7 +40,7 @@ const refreshToken = (req, res) => {
             SECRET_KEY,  //Chave secreta
             {expiresIn: '1m'}
             )
-        const refreshToken = jwt.sign(
+        const newRefreshToken = jwt.sign(
             {id: userFound.id}, //payload - dados que você quer guardar no token
             SECRET_KEY,  //Chave secreta
             {expiresIn: '3m'}
@@ -52,16 +52,16 @@ const refreshToken = (req, res) => {
                 token: token,
             },
             data: {
-                token: refreshToken
+                token: newRefreshToken
             }
         })  
         delete userFound.pass
-        res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 3 * 30 * 24 * 60 * 60 * 1000 })
+        res.cookie('refreshToken', newRefreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 3 * 30 * 24 * 60 * 60 * 1000 })
         return res.json({
             success: `AccessToken e RefreshToken Revalidado!`,
             user: userFound,
             accessToken,
-            refreshToken
+            newRefreshToken
         })
     })
 }
